@@ -1,4 +1,4 @@
-# CSE 490/599 G1 Homework 1 #
+# CSE 571 Homework 1 #
 
 Welcome fellow roboticists,
 
