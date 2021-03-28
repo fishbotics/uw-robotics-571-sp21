@@ -1,0 +1,5 @@
+.idea
+*.swp
+*~
+__pycache__
+submit.tar.gz
