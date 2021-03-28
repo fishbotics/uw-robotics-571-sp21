@@ -1,4 +1,4 @@
-# CSE 490/599 G1 Introduction to Deep Learning
+# CSE 571 Robotics
 
 # Important Note:
 PLEASE DO NOT make a public fork of this codebase. We use it for homework, so if the solutions got out, it would be bad. We are very serious about this. In the real-world of software engineering, it's great to share your code with the world, but in the wacky world of academia, we need to ensure that you are really learning the material and not just copying from Github and/or classmates. It's great if you want to collaborate and learn from other students, but you must do your own work and write your own code for this class. If you absolutely _must_ use GitHub for some reason (for example, if you're using multiple computers and you don't want to just share the directory), you can set up a private repo and push your code there. We won't be able to see the repo and neither will other students.
