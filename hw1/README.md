@@ -27,7 +27,7 @@ pytest tests/hw1_tests/test_linear_layer.py
 
 ## 1. Layers ##
 
-If you check out [nn/layers/layer.py](nn/layers/layer.py) you will see a lot of complicated python-foo. You can pretty much ignore all of it.
+If you check out [../nn/layers/layer.py](../nn/layers/layer.py) you will see a lot of complicated python-foo. You can pretty much ignore all of it.
 Importantly though, all of your neural network based operations will inherit from `Layer`. This helps create and track the computation graph.
 When you overload `Layer` you will need to implement a `forward` and `backward` function.
 There is also a `parent` which helps create the graph. For this homework you can ignore that field. It has been taken care of by the `SequentialLayer`.
@@ -42,14 +42,14 @@ You can optionally also implement `initialize` and `selfstr`.
 ## 2. Parameters ##
 
 These are special data holders for the weights (and biases) of the network. They will help you keep the forward weights and backward weight gradients straight.
-Look at [nn/parameter.py](nn/parameter.py) to see what they hold. For forward passes, you will need to access the `param.data` field, and for backward, you will need `param.grad`.
+Look at [../nn/parameter.py](../nn/parameter.py) to see what they hold. For forward passes, you will need to access the `param.data` field, and for backward, you will need `param.grad`.
 Note that calling `param.grad = ...` actually does the `+=` operation in order to accumulate gradients (this will become more useful in later homeworks).
 
 ## 3. Writing your first Layers ##
 
 ### 3.1 Linear Layer ###
 
-Open [nn/layers/linear_layer.py](nn/layers/linear_layer.py). Implementing the linear layer should be pretty straightforward.
+Open [../nn/layers/linear_layer.py](../nn/layers/linear_layer.py). Implementing the linear layer should be pretty straightforward.
 Implement both the `forward` and `backward` function. You should not include a nonlinearity here (that will be somewhere else).
 Also take a look at `selfstr`. This includes some extra information that will print when you call `print` on the layer or the network.
 You don't need to change that, but you might want to do similar things in other layers.
@@ -71,7 +71,7 @@ Fill in the code for the ReLU function using standard Numpy operations. Your cod
 Congratulations, you now have two pieces which you can combine to make a fully functioning neural network. Now we need to make a way to update the weights.
 
 ### 4.1 Softmax Cross Entropy Loss Forward ###
-Open [nn/layers/losses/softmax_cross_entropy_loss_layer.py](nn/layers/losses/softmax_cross_entropy_loss_layer.py).
+Open [../nn/layers/losses/softmax_cross_entropy_loss_layer.py](../nn/layers/losses/softmax_cross_entropy_loss_layer.py).
 Implement the forward pass. To avoid underflow/overflow, you should first subtract the max of each row.
 Because we are using the Softmax function, we can prove that these two inputs should give equivalent results.
 ```math
@@ -109,7 +109,7 @@ Where $`p(i)`$ is the label probability and $`q(x_i)`$ is the Softmax of the inp
 
 
 ### 4.3 SGD Update ###
-Open [nn/optimizers/sgd_optimizer.py](nn/optimizers/sgd_optimizer.py).
+Open [../nn/optimizers/sgd_optimizer.py](../nn/optimizers/sgd_optimizer.py).
 Recall that each `Parameter` has its own `data` and `grad` variables. Based on the other parts you wrote, the gradients should already be ready inside the `Parameter`. Now we just have to use them to update the weights.
 
 Our normal SGD update with learning rate η is:
@@ -118,7 +118,7 @@ Our normal SGD update with learning rate η is:
 w \Leftarrow w - \eta * \frac{\partial L}{\partial w}
 ```
 
-With this done, we can now train our first neural network! Open [hw1/main.py](hw1/main.py). We have already provided code to train and test a simple three layer neural network.
+With this done, we can now train our first neural network! Open [main.py](main.py). We have already provided code to train and test a simple three layer neural network.
 Have a look at the pretty standard training loop. First, you get the data. Then you call the forward function on the network to get its outputs. Finally, you zero the previous gradients, call backward on the network, and update the weights.
 You can run it by calling
 ```bash
