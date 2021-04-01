@@ -1,15 +1,16 @@
+name: robotics-class
 channels:
   - conda-forge
   - pytorch
   - defaults
 dependencies:
-  - python=3.6.9
-  - numba=0.45.1
-  - scikit-image=0.15.0
-  - scipy=1.3.1
-  - tqdm=4.32.1
-  - numpy==1.17.2
-  - opencv=3.4.2
-  - pytorch
-  - torchvision
-  - pytest
+  - python=3.8.8
+  - numba=0.53.1
+  - scikit-image=0.18.1
+  - scipy=1.6.2
+  - tqdm=4.59.0
+  - numpy=1.20.2
+  - opencv=4.5.1
+  - pytorch=1.8.0
+  - torchvision=0.9.0
+  - pytest=6.2.2
