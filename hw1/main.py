@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), os.pardir))
 
@@ -9,7 +9,7 @@ import tqdm
 from nn import Network
 from nn import layers
 from nn.layers import losses
-from nn.optimizers import SGDOptimizer, MomentumSGDOptimizer
+from nn.optimizers import SGDOptimizer
 
 
 class MNISTNetwork(Network):
@@ -33,15 +33,10 @@ class MNISTNetwork(Network):
         return self.loss_layer(predictions, labels)
 
 
-def train(train_data, train_labels, test_data, test_labels, optimizer_type="sgd"):
+def train(train_data, train_labels, test_data, test_labels):
     network = MNISTNetwork()
     print(network)
-    if optimizer_type == "sgd":
-        optimizer = SGDOptimizer(network.parameters(), lr)
-    elif optimizer_type == "momentum":
-        optimizer = MomentumSGDOptimizer(network.parameters(), lr, weight_decay=0.0005)
-    else:
-        raise NotImplementedError("This optimizer does not exist.")
+    optimizer = SGDOptimizer(network.parameters(), lr)
 
     iteration = -1
     print("-" * 50)
@@ -91,4 +86,4 @@ if __name__ == "__main__":
     test_data = test_data.reshape(-1, 28 ** 2)
     test_labels = test_dataset["labels"]
 
-    train(train_data, train_labels, test_data, test_labels, "sgd")
+    train(train_data, train_labels, test_data, test_labels)
