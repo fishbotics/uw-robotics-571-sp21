@@ -24,7 +24,7 @@ conda env create -f environment.yml
 conda activate robotics-class
 ```
 
-Although you don't technically _have to_ use Anaconda and Python 3.8.8, this is how we will be grading it, and if it doesn't work on our grading computer, we won't try too hard to make it work.
+Although you don't technically _have to_ use Anaconda and Python 3.6.7, this is how we will be grading it, and if it doesn't work on our grading computer, we won't try too hard to make it work.
 You should not still be using Python 2 (it's no longer supported, after all) and we have no intention of running your code in a Python 2 environment. However, _if_ you are still using Python 2.7, you can install Anaconda without messing up your current Python installation. Anaconda also makes sure that the installed libraries don't affect other projects on the same machine. There are other tools to do this as well (ask the TAs if you really want to get into it about Python tooling).
 
 Before starting each homework, you will first need to update the repository to get the new files.
