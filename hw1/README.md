@@ -135,6 +135,6 @@ First `cd` to the `hw1` directory. Then run the `submit.sh` script by running:
 bash submit.sh
 ```
 
-This will create the file `submit.tar.gz` in your directory with all the code you need to submit. The command will check to see that your files have changed relative to the version stored in the `git` repository. If it hasn't changed, figure out why, maybe you need to download your ipynb from google?
+This will create the file `submit.zip` in your directory with all the code you need to submit. The command will check to see that your files have changed relative to the version stored in the `git` repository. If it hasn't changed, figure out why, maybe you need to download your ipynb from google?
 
-Submit `submit.tar.gz` in the file upload field for Homework 1 on Canvas.
+Submit `submit.zip` in the file upload field for Homework 1 on Canvas.
