@@ -1,10 +1,12 @@
+import pytest
 import numpy as np
 
 from nn.layers import ReLULayer
 from tests import utils
 
-
-def _test_backward_approx(layer, data_shape):
+@pytest.mark.parametrize("data_shape", [(10, 20, 30)])
+@pytest.mark.parametrize("layer", [ReLULayer()])
+def test_backward_approx(layer, data_shape):
     h = 1e-4
     data = np.random.random(data_shape) * 10 - 5
     data[np.abs(data) < h] = 1
@@ -17,12 +19,3 @@ def _test_backward_approx(layer, data_shape):
     output_gradient = layer.backward(previous_partial_gradient)
 
     utils.assert_close((output1 - output2) / (2 * h), output_gradient)
-
-
-def test_layers():
-    layers = [
-        (ReLULayer(), (10, 20, 30)),
-    ]
-
-    for layer, data_shape in layers:
-        _test_backward_approx(layer, data_shape)
