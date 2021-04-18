@@ -1,11 +1,15 @@
+import pytest
+
 import numpy as np
 import torch.nn.functional as F
 
 from nn.layers.losses import SoftmaxCrossEntropyLossLayer
 from tests import utils
 
-
-def _test_forward(input_shape, reduction, axis):
+@pytest.mark.parametrize("input_shape", [(20, 10)])
+@pytest.mark.parametrize("reduction", ['mean', 'sum'])
+@pytest.mark.parametrize("axis", [1])
+def test_forward(input_shape, reduction, axis):
     layer = SoftmaxCrossEntropyLossLayer(reduction=reduction)
     data = np.random.random(input_shape) * 2 - 1
     labels_shape = list(data.shape)
@@ -22,14 +26,10 @@ def _test_forward(input_shape, reduction, axis):
 
     utils.assert_close(loss, pytorch_loss, atol=0.001)
 
-
-def test_forward_easy():
-    input_shape = (20, 10)
-    _test_forward(input_shape, "mean", 1)
-    _test_forward(input_shape, "sum", 1)
-
-
-def _test_forward_overflow(input_shape, reduction, axis):
+@pytest.mark.parametrize("input_shape", [(20, 10)])
+@pytest.mark.parametrize("reduction", ['mean', 'sum'])
+@pytest.mark.parametrize("axis", [1])
+def test_forward_overflow(input_shape, reduction, axis):
     layer = SoftmaxCrossEntropyLossLayer(reduction=reduction)
     data = np.random.random(input_shape) * 10000 - 1
     labels_shape = list(data.shape)
@@ -47,21 +47,16 @@ def _test_forward_overflow(input_shape, reduction, axis):
     utils.assert_close(loss, pytorch_loss, atol=0.001)
 
 
-def test_forward_overflow():
-    input_shape = (20, 10)
-    _test_forward_overflow(input_shape, "mean", 1)
-    _test_forward_overflow(input_shape, "sum", 1)
+@pytest.mark.parametrize("input_shape", [(20, 10, 5)])
+@pytest.mark.parametrize("reduction", ['mean', 'sum'])
+@pytest.mark.parametrize("axis", [1, 2])
+def test_forward_hard(input_shape, reduction, axis):
+    test_forward(input_shape, reduction, axis)
 
-
-def test_forward_hard():
-    input_shape = (20, 10, 5)
-    _test_forward(input_shape, "mean", 1)
-    _test_forward(input_shape, "sum", 1)
-    _test_forward(input_shape, "mean", 2)
-    _test_forward(input_shape, "sum", 2)
-
-
-def _test_backward(input_shape, reduction, axis):
+@pytest.mark.parametrize("input_shape", [(20, 10)])
+@pytest.mark.parametrize("reduction", ['mean', 'sum'])
+@pytest.mark.parametrize("axis", [1])
+def test_backward(input_shape, reduction, axis):
     layer = SoftmaxCrossEntropyLossLayer(reduction=reduction)
     data = np.random.random(input_shape) * 2 - 1
     labels_shape = list(data.shape)
@@ -87,28 +82,14 @@ def _test_backward(input_shape, reduction, axis):
 
     utils.assert_close(grad, torch_grad, atol=0.001)
 
+@pytest.mark.parametrize("input_shape", [(20, 10, 5)])
+@pytest.mark.parametrize("reduction", ['mean', 'sum'])
+@pytest.mark.parametrize("axis", [1, 2])
+def test_backward_hard(input_shape, reduction, axis):
+    test_backward(input_shape, reduction, axis)
 
-def test_backward_easy():
-    input_shape = (20, 10)
-    _test_backward(input_shape, "mean", 1)
-    _test_backward(input_shape, "sum", 1)
-
-
-def test_backward_hard():
-    input_shape = (20, 10, 5)
-    _test_backward(input_shape, "mean", 1)
-    _test_backward(input_shape, "sum", 1)
-    _test_backward(input_shape, "mean", 2)
-    _test_backward(input_shape, "sum", 2)
-
-
-def test_backward_harder():
-    input_shape = (20, 10, 5, 23)
-    _test_backward(input_shape, "mean", 0)
-    _test_backward(input_shape, "sum", 0)
-    _test_backward(input_shape, "mean", 1)
-    _test_backward(input_shape, "sum", 1)
-    _test_backward(input_shape, "mean", 2)
-    _test_backward(input_shape, "sum", 2)
-    _test_backward(input_shape, "mean", 3)
-    _test_backward(input_shape, "sum", 3)
+@pytest.mark.parametrize("input_shape", [(20, 10, 5, 23)])
+@pytest.mark.parametrize("reduction", ['mean', 'sum'])
+@pytest.mark.parametrize("axis", [0, 1, 2, 3])
+def test_backward_harder(input_shape, reduction, axis):
+    test_backward(input_shape, reduction, axis)

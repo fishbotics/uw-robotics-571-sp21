@@ -1,3 +1,5 @@
+import pytest
+
 import numpy as np
 import torch
 from torch import nn
@@ -8,7 +10,11 @@ from tests import utils
 TOLERANCE = 1e-4
 
 
-def _test_linear_forward(input_shape, out_channels):
+@pytest.mark.parametrize("batch_size", list(range(1, 4)))
+@pytest.mark.parametrize("input_channels", list(range(1, 5)))
+@pytest.mark.parametrize("out_channels", list(range(1, 5)))
+def test_linear_forward(batch_size, input_channels, out_channels):
+    input_shape = (batch_size, input_channels)
     in_channels = input_shape[1]
     input = np.random.random(input_shape).astype(np.float32) * 20
     original_input = input.copy()
@@ -27,15 +33,11 @@ def _test_linear_forward(input_shape, out_channels):
     utils.assert_close(output, torch_out, atol=TOLERANCE)
 
 
-def test_linear_forward():
-    for batch_size in range(1, 4):
-        for input_channels in range(1, 5):
-            for output_channels in range(1, 5):
-                input_shape = (batch_size, input_channels)
-                _test_linear_forward(input_shape, output_channels)
-
-
-def _test_linear_backward(input_shape, out_channels):
+@pytest.mark.parametrize("batch_size", list(range(1, 4)))
+@pytest.mark.parametrize("input_channels", list(range(1, 5)))
+@pytest.mark.parametrize("out_channels", list(range(1, 5)))
+def test_linear_backward(batch_size, input_channels, out_channels):
+    input_shape = (batch_size, input_channels)
     in_channels = input_shape[1]
     input = np.random.random(input_shape).astype(np.float32) * 20
     layer = LinearLayer(in_channels, out_channels)
@@ -52,11 +54,3 @@ def _test_linear_backward(input_shape, out_channels):
 
     utils.assert_close(out_grad, torch_input.grad, atol=TOLERANCE)
     utils.check_linear_grad_match(layer, torch_layer, tolerance=TOLERANCE)
-
-
-def test_linear_backward():
-    for batch_size in range(1, 4):
-        for input_channels in range(1, 5):
-            for output_channels in range(1, 5):
-                input_shape = (batch_size, input_channels)
-                _test_linear_backward(input_shape, output_channels)
